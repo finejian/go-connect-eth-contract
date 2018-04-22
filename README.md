@@ -69,7 +69,7 @@ import "zeppelin-solidity/contracts/token/ERC20/CappedToken.sol";
 
 安装完成Truffle后，cd到目标文件夹，执行 `truffle init` 命令，程序便会生成如下图目录，需要注意的示目标文件夹必须是空文件夹：
 
-![truffle-1](truffle-1.jpg)
+![truffle-1](images/truffle-1.jpg)
 
 contracts 目录存放合约文件，migrateions 目录，test 目录存放测试文件。  
 初始化truffle目录后即可编写合约，详细用法可参考[官方文档](http://truffleframework.com/docs/)：
@@ -133,7 +133,8 @@ make geth
 + console 2>>eth_dev_log            ：将命令行操作记录输出到指定文件
 
 启动的运行效果如下图，geth客户端运行起来后，类似于`eth.blockNumber`的方法可以在：[管理API](https://github.com/ethereum/go-ethereum/wiki/Management-APIs#list-of-management-apis)查阅：
-![geth-1](geth-1.jpg)
+
+![geth-1](images/geth-1.jpg)
 
 更多参数可以使用`geth -h`方式查看。
 
@@ -150,8 +151,9 @@ make geth
 7. 下图2中区域7为每一次访问dev网络的记录，点击detail查看详细，点击debug调试功能。
 
 具体操作如下图所示：
-![remix-1](remix-1.jpg)
-![remix-2](remix-2.jpg)
+
+![remix-1](images/remix-1.jpg)
+![remix-2](images/remix-2.jpg)
 
 # `Golang`连接合约
 
@@ -171,8 +173,8 @@ ABI是程序的二进制接口。一般来说，ABI是两个程序模块之间�
 5. 找到图2所示abi内容，复制并存储于项目中对应的`super_coin.abi`文件。
 具体操作如下图
 
-![gen-abi-1](gen-abi-1.jpg)
-![gen-abi-2](gen-abi-2.jpg)
+![gen-abi-1](images/gen-abi-1.jpg)
+![gen-abi-2](images/gen-abi-2.jpg)
 
 ### 使用`abigen`生成`super_coin.go`
 
@@ -183,10 +185,10 @@ cd $GOPATH/src/github.com/ethereum/go-ethereum
 godep go install ./cmd/abigen
 ```
 
->abigen --abi super_coin.abi --pkg main --type SuperCoin --out super_coin.go
+>abigen --abi super_coin.abi --pkg coin --type SuperCoin --out super_coin.go
 
 + --abi super_coin.abi    :指定abi文件来源
-+ --pkg main        :指定输出文件的包名
++ --pkg coin        :指定输出文件的包名
 + --type SuperCoin       :指定合约结构体名称
 + --out super_coin.go     :指定合约交互文件名称
 
