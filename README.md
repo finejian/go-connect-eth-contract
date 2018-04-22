@@ -42,11 +42,11 @@ Ganache是一个个人的以太坊客户端，可以启动一个私有链用于�
 
 #### `Ganache`和`Truffle`安装
 
-Ganache官方提供的[下载地址](http://truffleframework.com/ganache/)，下载安装允许即可不需要修改默认设置。
+Ganache官方提供的[下载地址](http://truffleframework.com/ganache/)，下载安装允许即可不需要修改默认设置。
 
 Truffle的目录结构跟Web项目相似度非常高，node_modules和Web一样是用来存放依赖库的目录，同样的安装依赖库也需要使用npm命令，安装方式请参考：[npmjs](https://www.npmjs.com/get-npm)
 
-Trffule[官方](http://truffleframework.com/docs/getting_started/installation)提供的安装方式便是借助npm的：
+Trffule[官方](http://truffleframework.com/docs/getting_started/installation)提供的安装方式便是借助npm的：
 ```
 npm install -g truffle
 ```
@@ -67,7 +67,7 @@ import "zeppelin-solidity/contracts/token/ERC20/CappedToken.sol";
 
 #### 使用`Truffle`编写和测试合约
 
-安装完成Truffle后，cd到目标文件夹，执行 `truffle init` 命令，程序便会生成如下图目录，需要注意的示目标文件夹必须是空文件夹：
+安装完成Truffle后，cd到目标文件夹，执行 `truffle init` 命令，程序便会生成如下图目录，需要注意的示目标文件夹必须是空文件夹：
 
 ![truffle-1](truffle-1.jpg)
 
@@ -114,7 +114,7 @@ make geth
 
 #### 启动`Geth`客户端
 
-正确执行上一步安装Geth，在命令行输入`geth -h`可测试geth是否正确安装，也可以通过这个命令查看geth提供的工具。
+正确执行上一步安装Geth，在命令行输入`geth -h`可测试geth是否正确安装，也可以通过这个命令查看geth提供的工具。
 
 使用全默认配置启动geth客户端，在命令行输入`geth`回车执行即可，geth会默认启动一个主网络节点，并尝试连接到其他节点，开始同步全量的区块数据。
 
@@ -155,7 +155,7 @@ make geth
 
 ## `Golang`连接合约
 
-### 使用`abigen`生成合约交互工具`coin.go`
+### 使用`abigen`生成合约交互工具`coin.go`
 
 ABI是程序的二进制接口。一般来说，ABI是两个程序模块之间的接口，而且通常其中一个程序处于机器级别。也就是说事实上ABI接口就是用于将数据编码/解码到机器代码的方法。  
 **在以太坊上，就是通过ABI把Solidity合约写入到EVM，后续也是借助ABI来从事务中读取到数据的。**  
