@@ -1,0 +1,50 @@
+# Logs
+logs
+*.log
+
+# Directories used by tools like mocha & istanbul
+coverage
+shippable
+
+# Dependency directory
+node_modules
+
+# Generated files
+config/development/contracts.json
+config/development/*.sol.js
+config/test/contracts.json
+build
+dist
+
+/tmp
+*/**/*un~
+*/**/*.test
+*un~
+.DS_Store
+*/**/.DS_Store
+.ethtest
+*/**/*tx_database*
+*/**/*dapps*
+build/_vendor/pkg
+
+#*
+.#*
+*#
+*~
+.project
+.settings
+
+# used by the Makefile
+/build/_workspace/
+/build/bin/
+/geth*.zip
+
+# travis
+profile.tmp
+profile.cov
+
+# IdeaIDE
+.idea
+
+# VS Code
+.vscode
