@@ -44,3 +44,18 @@ func Test_transfer(t *testing.T) {
 		So(0, ShouldEqual, -1)
 	})
 }
+
+func Test_whitelist(t *testing.T) {
+	Convey("Whitelist logics", t, func() {
+		c := NewConnecter()
+
+		owerAuth := AuthAccount(userKeystore1, userPassphrase1)
+
+		Println("Remove user No.2 from white list: ", c.RemoveFromWhitelist(owerAuth, userAddr2))
+		Println("User No.2 is in white list: ", c.ExistsWhiteList(userAddr2))
+		Println("Add user No.2 to white list: ", c.AddToWhitelist(owerAuth, userAddr2))
+		Println("User No.2 is in white list: ", c.ExistsWhiteList(userAddr2))
+
+		So(0, ShouldEqual, -1)
+	})
+}

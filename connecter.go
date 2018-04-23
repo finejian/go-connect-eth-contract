@@ -8,7 +8,6 @@ import (
 	"strings"
 
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
-
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/ethclient"
 )
@@ -135,4 +134,46 @@ func (c *Connecter) TransferLogs(froms []common.Address, tos []common.Address) {
 
 func (s *SuperCoinTransfer) String() string {
 	return fmt.Sprintf("From: %s, To: %s, Amount: %s, Log: %s", s.From.Hex(), s.To.Hex(), s.Value, s.Raw.String())
+}
+
+// ExistsWhiteList 地址是否在白名单
+func (c *Connecter) ExistsWhiteList(addr common.Address) bool {
+	exists, err := c.coin.Whitelist(&bind.CallOpts{}, addr)
+	if err != nil {
+		log.Fatalf("Query address exists white list error: %v", err)
+		return false
+	}
+	return exists
+}
+
+// AddToWhitelist 地址是否在白名单
+func (c *Connecter) AddToWhitelist(ownerAuth *bind.TransactOpts, addr common.Address) bool {
+	tx, err := c.coin.AddToWhitelist(ownerAuth, addr)
+	if err != nil {
+		log.Fatalf("Add address to white list error: %v", err)
+		return false
+	}
+	// 等待执行
+	receipt, err := bind.WaitMined(c.ctx, c.conn, tx)
+	if err != nil {
+		log.Fatalf("Wait AddToWhitelist Mined error: %v", err)
+		return false
+	}
+	return receipt.Status == 1
+}
+
+// RemoveFromWhitelist 地址是否在白名单
+func (c *Connecter) RemoveFromWhitelist(ownerAuth *bind.TransactOpts, addr common.Address) bool {
+	tx, err := c.coin.RemoveFromWhitelist(ownerAuth, addr)
+	if err != nil {
+		log.Fatalf("Remove address from white list error: %v", err)
+		return false
+	}
+	// 等待执行
+	receipt, err := bind.WaitMined(c.ctx, c.conn, tx)
+	if err != nil {
+		log.Fatalf("Wait RemoveFromWhitelist Mined error: %v", err)
+		return false
+	}
+	return receipt.Status == 1
 }
