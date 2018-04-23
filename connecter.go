@@ -2,15 +2,19 @@ package coin
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"math/big"
+	"strings"
+
+	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/ethclient"
 )
 
 var (
-	coinAddr = common.HexToAddress("0x85ceab775c6a0e65ac41970f76ed8f8e85aeefe0")
+	coinAddr = common.HexToAddress("0x5A4E05aCd772BAe3109e6C424907BE9F4e35b6Db")
 	coinHash = coinAddr.Hash()
 )
 
@@ -86,4 +90,49 @@ func (c *Connecter) TotalSupply() *big.Int {
 		return big.NewInt(0)
 	}
 	return totalSupply
+}
+
+// AuthAccount 解锁账户
+func AuthAccount(key, passphrase string) *bind.TransactOpts {
+	auth, err := bind.NewTransactor(strings.NewReader(key), passphrase)
+	if err != nil {
+		log.Fatalf("Auth account error: %v", err)
+		return nil
+	}
+	log.Printf("Gas price is: %v, Gas limit is: %v", auth.GasPrice, auth.GasLimit)
+	return auth
+}
+
+// TransferCoin SuperCoin转账
+func (c *Connecter) TransferCoin(fromAuth *bind.TransactOpts, to common.Address, amount *big.Int) bool {
+	tx, err := c.coin.Transfer(fromAuth, to, amount)
+	if err != nil {
+		log.Fatalf("Transfer SuperCoin from %s to %s amount %s error: %v", fromAuth.From.String(), to.String(), amount.String(), err)
+		return false
+	}
+	// 等待执行
+	receipt, err := bind.WaitMined(c.ctx, c.conn, tx)
+	if err != nil {
+		log.Fatalf("Wait Transfer Mined error: %v", err)
+		return false
+	}
+	return receipt.Status == 1
+}
+
+// TransferLogs SuperCoin转账记录
+func (c *Connecter) TransferLogs(froms []common.Address, tos []common.Address) {
+	iter, err := c.coin.FilterTransfer(&bind.FilterOpts{}, froms, tos)
+	if err != nil {
+		panic(err)
+	}
+	for {
+		if !iter.Next() {
+			break
+		}
+		log.Printf("Transfer log: %s", iter.Event.String())
+	}
+}
+
+func (s *SuperCoinTransfer) String() string {
+	return fmt.Sprintf("From: %s, To: %s, Amount: %s, Log: %s", s.From.Hex(), s.To.Hex(), s.Value, s.Raw.String())
 }
