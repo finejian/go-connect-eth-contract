@@ -243,3 +243,9 @@ if err != nil {
     panic(err)
 }
 ```
+
+# 联系我
+
+如果有需要，欢迎扫描下面二维码添加微信沟通。
+
+![weixin](images/weixin.jpg)
