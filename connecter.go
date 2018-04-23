@@ -26,6 +26,8 @@ type Connecter struct {
 
 // NewConnecter 生成一个SuperCoin连接者
 func NewConnecter() *Connecter {
+	// Dial这里支持传入 ws、http、ipc的多种链接
+	// 如果是经常需要调用最好还是使用 ws 方式保持通讯状态
 	conn, err := ethclient.Dial("ws://127.0.0.1:8546")
 	if err != nil {
 		panic(err)

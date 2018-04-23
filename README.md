@@ -196,7 +196,40 @@ godep go install ./cmd/abigen
 
 ## 使用`super_coin.go`实现与合约交互
 
+如下面代码，`ethclient.Dial()` 创建出来和以太坊的链接，再将这个链接传入 `super_coin.go` 的 `NewSuperCoin()` 方法即可创建出来合约对象，`super_coin.go` 提供了几乎所有程序需要和合约交互的方法，详细使用可以查看示例代码 [connecter.go](connecter.go) 。
 
+```golang
+var (
+	coinAddr = common.HexToAddress("0x5A4E05aCd772BAe3109e6C424907BE9F4e35b6Db")
+	coinHash = coinAddr.Hash()
+)
+
+// Connecter SuperCoin连接者
+type Connecter struct {
+	ctx  context.Context
+	conn *ethclient.Client
+	coin *SuperCoin
+}
+
+// NewConnecter 生成一个SuperCoin连接者
+func NewConnecter() *Connecter {
+	// Dial这里支持传入 ws、http、ipc的多种链接
+	// 如果是经常需要调用最好还是使用 ws 方式保持通讯状态
+	conn, err := ethclient.Dial("ws://127.0.0.1:8546")
+	if err != nil {
+		panic(err)
+	}
+	coin, err := NewSuperCoin(coinAddr, conn)
+	if err != nil {
+		panic(err)
+	}
+	return &Connecter{
+		ctx:  context.Background(),
+		conn: conn,
+		coin: coin,
+	}
+}
+```
 
 # 借助`Infura`连接主网络或测试网络
 
