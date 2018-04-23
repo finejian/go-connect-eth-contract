@@ -233,4 +233,13 @@ func NewConnecter() *Connecter {
 
 # 借助`Infura`连接主网络或测试网络
 
+项目开发过程中，测试阶段使用dev网络是没问题的，开发完毕后我们需要在测试运行，以及正式部署运行，这时候往往会发现 geth 运行起来的节点如果在国内的服务器上，经常会出现链接不到节点，或者链接不稳定的情况。这个时候你可能会考虑将 geth 运行在国外的服务器，实际上这个时候我们可以选择使用 `Infura` ， **`Infura` 可以给我们提供稳定的测试网络 `Rinkeby`、`Ropsten` 和主网络 `Mainnet`的链接**，使用也毫无门槛，只需要如下将 `ethclient.Dial()` url替换即可。
 
+官网地址： http://infura.io/
+
+```golang
+conn, err := ethclient.Dial("https://mainnet.infura.io/LQ........bg")
+if err != nil {
+    panic(err)
+}
+```
