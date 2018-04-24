@@ -122,15 +122,17 @@ make geth
 
 >geth --networkid=1234 --nodiscover --rpc --rpcport=8545 --ws --wsport=8546 --rpccorsdomain="*" --dev --dev.period 1 --datadir=/Users/james/eth/dev console 2>>eth_dev_log
 
-+ --networkid=1234                  ：指定网络ID，只有网络ID一致等节点才可以相互链接，以太主网路网络ID是1，不设置情况下默认ID也是1
-+ --nodiscover                      ：设置为不被其他节点发现
-+ --rpc --rpcport=8545              ：开启RPC连接方式，并设置端口为8545
-+ --rpccorsdomain="*"               ：RPC允许所有跨域连接，这个设置主要是为了Remix在线连接本地开发网络
-+ --ws --wsport=8546                ：开启WebSocket连接方式，并设置端口为8546
-+ --dev --dev.period 1              ：开启开发网络无交易时自动挖矿设置，如不添加此设置在没有新交易时，默认不自动挖矿
-+ --datadir=/Users/james/eth/dev    ：设置节点区块数据本地磁盘路径，不设置时将使用默认路径
-+ console                           ：Geth启动后仍可接收命令行命令，如不开启又需要使用命令行也可以通过`geth attach ipc:\\.\pipe\geth.ipc`方式连接到当前节点
-+ console 2>>eth_dev_log            ：将命令行操作记录输出到指定文件
+|命令|解释|
+|-|-|
+|--networkid=1234|指定网络ID，只有网络ID一致等节点才可以相互链接，以太主网路网络ID是1，不设置情况下默认ID也是1|
+|--nodiscover|设置为不被其他节点发现|
+|--rpc --rpcport=8545|开启RPC连接方式，并设置端口为8545|
+|--rpccorsdomain="*"|RPC允许所有跨域连接，这个设置主要是为了Remix在线连接本地开发网络|
+|--ws --wsport=8546|开启WebSocket连接方式，并设置端口为8546|
+|--dev --dev.period 1|开启开发网络无交易时自动挖矿设置，如不添加此设置在没有新交易时，默认不自动挖矿|
+|--datadir=/eth/dev|设置节点区块数据本地磁盘路径，不设置时将使用默认路径|
+|console|Geth启动后仍可接收命令行命令，如不开启又需要使用命令行也可以通过`geth attach ipc:\\.\pipe\geth.ipc`方式连接到当前节点|
+|console 2>>eth_dev_log|将命令行操作记录输出到指定文件|
 
 启动的运行效果如下图，geth客户端运行起来后，类似于`eth.blockNumber`的方法可以在：[管理API](https://github.com/ethereum/go-ethereum/wiki/Management-APIs#list-of-management-apis)查阅：
 
@@ -187,16 +189,19 @@ godep go install ./cmd/abigen
 
 >abigen --abi super_coin.abi --pkg coin --type SuperCoin --out super_coin.go
 
-+ --abi super_coin.abi    :指定abi文件来源
-+ --pkg coin        :指定输出文件的包名
-+ --type SuperCoin       :指定合约结构体名称
-+ --out super_coin.go     :指定合约交互文件名称
+
+|命令|解释|
+|-|-|
+|--abi super_coin.abi|指定abi文件来源|
+|--pkg coin|指定输出文件的包名|
+|--type SuperCoin|指定合约结构体名称|
+|--out super_coin.go|指定合约交互文件名称|
 
 更多使用方法可使用`abigen -h`命令来查看。
 
 ## 使用`super_coin.go`实现与合约交互
 
-如下面代码，`ethclient.Dial()` 创建出来和以太坊的链接，再将这个链接传入 `super_coin.go` 的 `NewSuperCoin()` 方法即可创建出来合约对象，`super_coin.go` 提供了几乎所有程序需要和合约交互的方法，详细使用可以查看示例代码 [connecter.go](connecter.go) 。
+如下面代码，`ethclient.Dial()` 创建出来和以太坊的链接，再将这个链接传入 `super_coin.go` 的 `NewSuperCoin()` 方法即可创建出来合约对象，`super_coin.go` 提供了几乎所有程序需要和合约交互的方法，详细使用可以查看示例代码 [connecter.go](connecter.go) 。或查阅 [官方文档](https://github.com/ethereum/go-ethereum/wiki/Native-DApps:-Go-bindings-to-Ethereum-contracts)。
 
 ```golang
 var (
