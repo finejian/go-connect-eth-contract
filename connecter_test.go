@@ -10,10 +10,12 @@ import (
 
 var (
 	userAddr0       = common.HexToAddress("0x0000000000000000000000000000000000000000")
-	userAddr1       = common.HexToAddress("0x6fb96014e851659ff031cA1413AD438203C8788F")
-	userAddr2       = common.HexToAddress("0x86bDFc9D950e5Eb927E44174c64BC8B66a2207a8")
-	userKeystore1   = `{"address":"6fb96014e851659ff031ca1413ad438203c8788f","crypto":{"cipher":"aes-128-ctr","ciphertext":"88f4941608756f2b61fc087d1a666d12545b5f2d1af199d642f9d8c43fbecf94","cipherparams":{"iv":"0a83f7f86463988bb4a81cecd0cc79c9"},"kdf":"scrypt","kdfparams":{"dklen":32,"n":262144,"p":1,"r":8,"salt":"768c97d244f72748869f0c8310e474c2dee809e503ab4bd61526a3b4302d1978"},"mac":"1ce9be55283b69c1fd8b77619796dfae7331fe0d44868b72694bbd2f6b52f4f1"},"id":"84244989-8093-401f-9f84-7572fc66ccb5","version":3}`
-	userPassphrase1 = "123456"
+	userAddr1       = common.HexToAddress("0x8987282dcad8feee4cab0b71ae01b126f9ae27f4")
+	userAddr2       = common.HexToAddress("0x204b936b9329c8b1b780610630cbbbf193e2347f")
+	userKeystore1   = `{"address":"8987282dcad8feee4cab0b71ae01b126f9ae27f4","crypto":{"cipher":"aes-128-ctr","ciphertext":"aac8164a46a7dc526950024a53f7e7ac0ae3e9ef408b3572ba8ebb90dfbc1851","cipherparams":{"iv":"82e0b442471f5c0917b252078d708196"},"kdf":"scrypt","kdfparams":{"dklen":32,"n":262144,"p":1,"r":8,"salt":"2f1281a07ea3b7e4485ac03c8807bedc0fa033153ccad511d70a3b752b4caf5c"},"mac":"e2ac09d068be64d2ede5677d815dd78e83b73a59a37f7042975a6688c918fb3f"},"id":"9e476b7a-ec3c-4a41-977c-24b05526a1e8","version":3}`
+	userPassphrase1 = ""
+	userKeystore2   = `{"address":"204b936b9329c8b1b780610630cbbbf193e2347f","crypto":{"cipher":"aes-128-ctr","ciphertext":"e94b5a5d52e5619bd842d3de2b3c0e7cd1639a463e33446fcf595ed2e3ed6343","cipherparams":{"iv":"15ddb401f5d61599a99881165c04ff5f"},"kdf":"scrypt","kdfparams":{"dklen":32,"n":262144,"p":1,"r":8,"salt":"3d27281f418b3509dcb452e07825ad3e2335f58e352a7c01192ccc0420e66663"},"mac":"8175b96635275741e609ad54fe4c05aed4e02de4210eff1f48a9fc404d7ab8bb"},"id":"efa188b6-992f-4883-bc3a-4888522a67ee","version":3}`
+	userPassphrase2 = "123456"
 )
 
 func Test_query(t *testing.T) {

@@ -17,6 +17,7 @@ build
 dist
 
 /tmp
+*/**/tmp
 */**/*un~
 */**/*.test
 *un~

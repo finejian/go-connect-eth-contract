@@ -13,7 +13,7 @@ import (
 )
 
 var (
-	coinAddr = common.HexToAddress("0x5A4E05aCd772BAe3109e6C424907BE9F4e35b6Db")
+	coinAddr = common.HexToAddress("0x58cd5c44b9318a306894c379603ccf2edc2363cd")
 	coinHash = coinAddr.Hash()
 )
 
@@ -136,7 +136,7 @@ func (c *Connecter) TransferLogs(froms []common.Address, tos []common.Address) {
 }
 
 func (s *SuperCoinTransfer) String() string {
-	return fmt.Sprintf("From: %s, To: %s, Amount: %s, Log: %s", s.From.Hex(), s.To.Hex(), s.Value, s.Raw.String())
+	return fmt.Sprintf("From: %s, To: %s, Amount: %s", s.From.Hex(), s.To.Hex(), s.Value)
 }
 
 // ExistsWhiteList 地址是否在白名单
@@ -213,5 +213,33 @@ func (c *Connecter) MintLogs() {
 }
 
 func (s *SuperCoinMint) String() string {
-	return fmt.Sprintf("Address: %s, Amount: %s, Log: %s", s.To.String(), s.Amount.String(), s.Raw.String())
+	return fmt.Sprintf("Address: %s, Amount: %s", s.To.String(), s.Amount.String())
+}
+
+// WatchTransferAndMint 监听transfer和mint事件
+func (c *Connecter) WatchTransferAndMint() {
+	transferCh := make(chan *SuperCoinTransfer)
+	transferSub, err := c.coin.WatchTransfer(&bind.WatchOpts{}, transferCh, nil, nil)
+	if err != nil {
+		panic(err)
+	}
+
+	mintCh := make(chan *SuperCoinMint)
+	mintSub, err := c.coin.WatchMint(&bind.WatchOpts{}, mintCh, nil)
+	if err != nil {
+		panic(err)
+	}
+
+	for {
+		select {
+		case t := <-transferCh:
+			log.Printf("Transfer From: %s, To: %s, Amount: %d", t.From.String(), t.To.String(), t.Value)
+		case e := <-transferSub.Err():
+			panic(e)
+		case m := <-mintCh:
+			log.Printf("Mint To: %s, Amount: %d", m.To.String(), m.Amount)
+		case e := <-mintSub.Err():
+			panic(e)
+		}
+	}
 }
