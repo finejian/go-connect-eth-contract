@@ -10,13 +10,28 @@ import (
 
 var (
 	userAddr0       = common.HexToAddress("0x0000000000000000000000000000000000000000")
-	userAddr1       = common.HexToAddress("0x8987282dcad8feee4cab0b71ae01b126f9ae27f4")
-	userAddr2       = common.HexToAddress("0x204b936b9329c8b1b780610630cbbbf193e2347f")
-	userKeystore1   = `{"address":"8987282dcad8feee4cab0b71ae01b126f9ae27f4","crypto":{"cipher":"aes-128-ctr","ciphertext":"aac8164a46a7dc526950024a53f7e7ac0ae3e9ef408b3572ba8ebb90dfbc1851","cipherparams":{"iv":"82e0b442471f5c0917b252078d708196"},"kdf":"scrypt","kdfparams":{"dklen":32,"n":262144,"p":1,"r":8,"salt":"2f1281a07ea3b7e4485ac03c8807bedc0fa033153ccad511d70a3b752b4caf5c"},"mac":"e2ac09d068be64d2ede5677d815dd78e83b73a59a37f7042975a6688c918fb3f"},"id":"9e476b7a-ec3c-4a41-977c-24b05526a1e8","version":3}`
+	userAddr1       = common.HexToAddress("0x0a7ca39ed27d24626219f8a4147484f9a8537f51")
+	userAddr2       = common.HexToAddress("0x6fb96014e851659ff031ca1413ad438203c8788f")
+	userAddr3       = common.HexToAddress("0x86bdfc9d950e5eb927e44174c64bc8b66a2207a8")
+	userKeystore1   = `{"address":"0a7ca39ed27d24626219f8a4147484f9a8537f51","crypto":{"cipher":"aes-128-ctr","ciphertext":"a995296dbca789c2e8334c2cc5761e1c78b6a9a27a877e74e7d6105da935eeb5","cipherparams":{"iv":"85a110c69409de030e89939687c373f2"},"kdf":"scrypt","kdfparams":{"dklen":32,"n":262144,"p":1,"r":8,"salt":"f8557d90c835f8b1103577db50ce3deda043b6494e0c1f52135514684f193837"},"mac":"504346cd0dfdbb9b1a4505f63441b8a3a57200f39de7e2ab51706f850f25430f"},"id":"27b2b139-c4c3-4cb9-8733-514a077d9d50","version":3}`
 	userPassphrase1 = ""
-	userKeystore2   = `{"address":"204b936b9329c8b1b780610630cbbbf193e2347f","crypto":{"cipher":"aes-128-ctr","ciphertext":"e94b5a5d52e5619bd842d3de2b3c0e7cd1639a463e33446fcf595ed2e3ed6343","cipherparams":{"iv":"15ddb401f5d61599a99881165c04ff5f"},"kdf":"scrypt","kdfparams":{"dklen":32,"n":262144,"p":1,"r":8,"salt":"3d27281f418b3509dcb452e07825ad3e2335f58e352a7c01192ccc0420e66663"},"mac":"8175b96635275741e609ad54fe4c05aed4e02de4210eff1f48a9fc404d7ab8bb"},"id":"efa188b6-992f-4883-bc3a-4888522a67ee","version":3}`
+	userKeystore2   = `{"address":"6fb96014e851659ff031ca1413ad438203c8788f","crypto":{"cipher":"aes-128-ctr","ciphertext":"88f4941608756f2b61fc087d1a666d12545b5f2d1af199d642f9d8c43fbecf94","cipherparams":{"iv":"0a83f7f86463988bb4a81cecd0cc79c9"},"kdf":"scrypt","kdfparams":{"dklen":32,"n":262144,"p":1,"r":8,"salt":"768c97d244f72748869f0c8310e474c2dee809e503ab4bd61526a3b4302d1978"},"mac":"1ce9be55283b69c1fd8b77619796dfae7331fe0d44868b72694bbd2f6b52f4f1"},"id":"84244989-8093-401f-9f84-7572fc66ccb5","version":3}`
 	userPassphrase2 = "123456"
+	userKeystore3   = `{"address":"86bdfc9d950e5eb927e44174c64bc8b66a2207a8","crypto":{"cipher":"aes-128-ctr","ciphertext":"93911eed55101caa8d5e477411aa242e00c9a40cb8f261209bed6e00dadccd09","cipherparams":{"iv":"1388ba0610ea45076c84913468f73847"},"kdf":"scrypt","kdfparams":{"dklen":32,"n":262144,"p":1,"r":8,"salt":"720e4fa904fa74c32d1776583def02b8e5fc4d26d2c322743d1514bdc67d3605"},"mac":"caafcf3ab02ec39eb3204228be1d71833ee77fcf4832f9ff345532f60dc56737"},"id":"19d86e8b-1c2a-487f-99d8-20376e5b518f","version":3}`
+	userPassphrase3 = "123456"
 )
+
+func Test_deploy(t *testing.T) {
+	Convey("Deploy logics", t, func() {
+		ownerAuth := AuthAccount(userKeystore1, userPassphrase1)
+		c := NewConnecterWithDeploy(ownerAuth)
+
+		Println("Contract address is: ", CoinAddr.String())
+		Println("Contract name is: ", c.ContractName())
+
+		So(0, ShouldEqual, -1)
+	})
+}
 
 func Test_query(t *testing.T) {
 	Convey("Query logics", t, func() {

@@ -143,6 +143,7 @@ make geth
 ### `Remix`介绍
 
 `Remix`是以太坊官方提供的在线合约构建和debug的IDE和工具集，项目地址： https://github.com/ethereum/remix-ide 、 在线工具： https://remix.ethereum.org  
+
 下面简单介绍一下怎样用remix部署合约到前一步geth启动起来的dev环境：
 1. 创建`coin.sol`文件；
 2. 将编写好的合约代码置于代码区域；
@@ -155,6 +156,9 @@ make geth
 具体操作如下图所示：
 
 ![remix-1](images/remix-1.jpg)
+
+部署过程中有两个重要生成内容，abi和bin需要保存下来，入下图所示，object里面内容即为bin，内容copy后保存为`super_coin.bin`文件，abi内容点击复制后，保存为`super_coin.abi`文件。
+
 ![remix-2](images/remix-2.jpg)
 
 # `Golang`连接合约
@@ -187,7 +191,7 @@ cd $GOPATH/src/github.com/ethereum/go-ethereum
 godep go install ./cmd/abigen
 ```
 
->abigen --abi super_coin.abi --pkg coin --type SuperCoin --out super_coin.go
+>abigen --abi super_coin.abi --pkg coin --type SuperCoin --out super_coin.go --bin super_coin.bin
 
 
 |命令|解释|
@@ -196,6 +200,7 @@ godep go install ./cmd/abigen
 |--pkg coin|指定输出文件的包名|
 |--type SuperCoin|指定合约结构体名称|
 |--out super_coin.go|指定合约交互文件名称|
+|--bin super_coin.bin|指定合约部署来源|
 
 更多使用方法可使用`abigen -h`命令来查看。
 

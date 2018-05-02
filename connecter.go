@@ -13,8 +13,10 @@ import (
 )
 
 var (
-	coinAddr = common.HexToAddress("0x58cd5c44b9318a306894c379603ccf2edc2363cd")
-	coinHash = coinAddr.Hash()
+	// CoinAddr superCoin 合约地址
+	CoinAddr = common.HexToAddress("0x84F70FEa5Ba54323C0EF85c58A47c98E1a2fe2Db")
+	// CoinHash superCoin 合约地址Hash
+	CoinHash = CoinAddr.Hash()
 )
 
 // Connecter SuperCoin连接者
@@ -32,12 +34,35 @@ func NewConnecter() *Connecter {
 	if err != nil {
 		panic(err)
 	}
-	coin, err := NewSuperCoin(coinAddr, conn)
+	coin, err := NewSuperCoin(CoinAddr, conn)
 	if err != nil {
 		panic(err)
 	}
 	return &Connecter{
 		ctx:  context.Background(),
+		conn: conn,
+		coin: coin,
+	}
+}
+
+// NewConnecterWithDeploy 部署合约，并创建一个connecter
+func NewConnecterWithDeploy(ownerAuth *bind.TransactOpts) *Connecter {
+	conn, err := ethclient.Dial("ws://127.0.0.1:8546")
+	if err != nil {
+		panic(err)
+	}
+	_, tx, coin, err := DeploySuperCoin(ownerAuth, conn)
+	if err != nil {
+		panic(err)
+	}
+	ctx := context.Background()
+	CoinAddr, err = bind.WaitDeployed(ctx, conn, tx)
+	if err != nil {
+		panic(err)
+	}
+	CoinHash = CoinAddr.Hash()
+	return &Connecter{
+		ctx:  ctx,
 		conn: conn,
 		coin: coin,
 	}
@@ -94,6 +119,7 @@ func (c *Connecter) TotalSupply() *big.Int {
 }
 
 // AuthAccount 解锁账户
+// 正式使用时候，此处应该限制GasPrice和GasLimit
 func AuthAccount(key, passphrase string) *bind.TransactOpts {
 	auth, err := bind.NewTransactor(strings.NewReader(key), passphrase)
 	if err != nil {
